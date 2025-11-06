@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rubberduck AI",
-  description: "Your AI coding companion",
+  title: "EPRD",
+  description: "Your AI data companion",
 };
 
 export default function RootLayout({

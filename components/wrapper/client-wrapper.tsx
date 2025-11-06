@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SessionProvider } from "next-auth/react";
 
 export function ClientWrapper({ children }: { children: React.ReactNode }) {
   const [isHydrated, setIsHydrated] = useState(false);
@@ -14,5 +13,5 @@ export function ClientWrapper({ children }: { children: React.ReactNode }) {
     return null;
   }
 
-  return <SessionProvider>{children}</SessionProvider>;
+  return <>{children}</>;
 }

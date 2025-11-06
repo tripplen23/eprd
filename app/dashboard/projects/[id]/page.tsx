@@ -2,34 +2,8 @@
 
 import { ChatContainer } from '@/app/dashboard/projects/[id]/features/chat/container';
 import { MarkdownSectionsContainer } from '@/app/dashboard/projects/[id]/features/markdown-sections/container';
-import { useSession } from 'next-auth/react';
-import { useEffect, useRef } from 'react';
-import { toast } from 'sonner';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 export default function Project() {
-    const { status } = useSession();
-    const toastShownRef = useRef(false);
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const pathname = usePathname();
-
-    useEffect(() => {
-        const loginSuccess = searchParams.get('loginSuccess');
-
-        if (status === 'authenticated' && loginSuccess === 'true' && !toastShownRef.current) {
-            toast.success('Successfully signed in!', { duration: 3000 });
-            toastShownRef.current = true;
-
-            const newSearchParams = new URLSearchParams(searchParams.toString());
-            newSearchParams.delete('loginSuccess');
-            const newUrl = `${pathname}?${newSearchParams.toString()}`;
-            router.replace(newUrl, { scroll: false });
-
-        } else if (status === 'unauthenticated') {
-            toastShownRef.current = false;
-        }
-    }, [status, searchParams, router, pathname]);
 
     return (
         <div className="flex flex-col h-full bg-background mr-3">

@@ -25,9 +25,9 @@ export function NavMain({ isCollapsed }: NavMainProps) {
             icon: FileText,
             href: '/documents',
             subitems: [
-                { title: 'All Documents', href: '/documents' },
-                { title: 'Shared', href: '/documents/shared' },
-                { title: 'Archived', href: '/documents/archived' },
+                { title: 'All Documents', href: '/dashboard/projects/[id]' },
+                { title: 'Shared', href: '/dashboard/projects/[id]' },
+                { title: 'Archived', href: '/dashboard/projects/[id]' },
             ],
         },
     ];

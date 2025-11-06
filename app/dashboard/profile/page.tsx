@@ -1,28 +1,16 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import React from "react";
-import { signOut } from "next-auth/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import LoadingDots from "@/components/ui/loading-dots";
 
 function Profile() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
   const defaultAvatar = "https://github.com/shadcn.png";
-
-  if (status === "loading") {
-    return <LoadingDots />;
-  }
-  if (!session) {
-    return router.push("/auth");
-  }
-
-  const handleLogout = () => {
-    signOut({ callbackUrl: '/auth' });
+  
+  // Mock user data - replace with your actual user management solution
+  const user = {
+    name: "John Doe",
+    email: "john@example.com",
+    image: defaultAvatar,
   };
 
   return (
@@ -40,23 +28,16 @@ function Profile() {
         <CardContent className="pt-6 pb-8 px-6 relative z-10 flex flex-col gap-6">
           <div className="flex flex-col items-center gap-4">
             <Avatar className="w-24 h-24">
-              <AvatarImage src={session.user?.image || defaultAvatar} />
-              <AvatarFallback>{session.user?.name?.charAt(0)}</AvatarFallback>
+              <AvatarImage src={user.image} />
+              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="text-center space-y-1">
               <h2 className="text-lg font-semibold text-black dark:text-white">
-                {session.user?.name}
+                {user.name}
               </h2>
-              <p className="text-sm text-gray-400">{session.user?.email}</p>
+              <p className="text-sm text-gray-400">{user.email}</p>
             </div>
           </div>
-          <Button
-            className="cursor-pointer w-full h-12 font-medium bg-black/5 text-black hover:bg-black/10 border border-black/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 dark:border-white/10 backdrop-blur-sm transition-all duration-300 rounded-lg shadow-lg relative group overflow-hidden"
-            onClick={handleLogout}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 via-transparent to-red-500/20 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-full transition-all duration-1000"></div>
-            <span className="relative z-10">Logout</span>
-          </Button>
         </CardContent>
       </Card>
     </div>

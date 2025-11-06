@@ -32,7 +32,7 @@ export default function Home() {
           ]}
           className="text-6xl font-bold mb-6 bg-clip-text drop-shadow-lg"
         >
-          RubberDuck AI
+          EPRD
         </AuroraText>
         <MorphingText
           className="text-gray-600 dark:text-gray-300 mb-12 mx-auto"

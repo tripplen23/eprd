@@ -19,15 +19,15 @@ export function NavProjects({ isCollapsed }: NavProjectsProps) {
     const projects = [
         {
             title: 'Design Engineering',
-            href: '/projects/design',
+            href: '/dashboard/projects/[id]',
         },
         {
             title: 'Sales & Marketing',
-            href: '/projects/sales',
+            href: '/dashboard/projects/[id]',
         },
         {
             title: 'Travel',
-            href: '/projects/travel',
+            href: '/dashboard/projects/[id]',
         },
     ];
 

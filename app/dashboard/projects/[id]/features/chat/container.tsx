@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, memo } from "react";
+import { memo } from "react";
 import { FileWithBase64 } from "./types";
 import { messagesWithTimestamps } from "./helper";
 
@@ -31,11 +31,6 @@ function ChatContainerComponent() {
     isRestoredCheckpoint,
     isAfterRestored,
   } = useCheckpoints();
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const handleMessageSubmit = async (
     message: string,

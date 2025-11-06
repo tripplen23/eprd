@@ -3,6 +3,7 @@ import React from 'react';
 import { AuthView } from './components/auth-view';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 function Auth() {
     const router = useRouter();
@@ -19,10 +20,11 @@ function Auth() {
             <div className="relative z-10 w-full max-w-md px-4">
                 <div className="text-center mb-8">
                     <div className="flex justify-center mb-4">
-                        <img
+                        <Image
                             src="https://avatars.githubusercontent.com/u/198960902?s=48&v=4"
                             alt="Company Logo"
-                            className="h-12 w-12"
+                            width={48}
+                            height={48}
                         />
                     </div>
                     <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">

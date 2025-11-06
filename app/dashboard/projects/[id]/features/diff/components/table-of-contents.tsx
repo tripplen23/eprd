@@ -24,7 +24,7 @@ export function TableOfContentsDiff({
   activeSection = "",
 }: TableOfContentsDiffProps) {
   const renderExtraContent = useMemo(() => {
-    return () => {
+    const ExtraContent = () => {
       return pendingSections.length === 0 ? (
         <div className="text-sm text-muted-foreground py-4 px-2">
           No pending changes to display.
@@ -37,6 +37,8 @@ export function TableOfContentsDiff({
         </div>
       ) : null;
     };
+    ExtraContent.displayName = 'ExtraContent';
+    return ExtraContent;
   }, [pendingSections.length, onReturnToNormalView]);
 
   return (

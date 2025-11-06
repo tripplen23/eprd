@@ -36,7 +36,7 @@ export function useChatActions() {
             abortController.current = new AbortController();
 
             // Prepare the new user message object
-            const newUserMessageContent: Array<{ type: string; [key: string]: any }> = [];
+            const newUserMessageContent: Array<{ type: string; [key: string]: unknown }> = [];
 
             if (message.trim()) {
                 newUserMessageContent.push({
@@ -141,8 +141,8 @@ export function useChatActions() {
 
                 // Return the response and updates for any additional processing needed by the container
                 return { response, sectionUpdates };
-            } catch (error: any) {
-                if (error.name === 'AbortError') {
+            } catch (error: unknown) {
+                if (error instanceof Error && error.name === 'AbortError') {
                     console.log('Request was cancelled');
                     dispatch(
                         chatActions.addMessage({

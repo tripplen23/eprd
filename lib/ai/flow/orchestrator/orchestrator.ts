@@ -39,7 +39,6 @@ export const processUserRequest = async (
 
   // Start
   const startTime = performance.now();
-  let stepStartTime = startTime;
 
   // Helper to emit logs both to console and UI
   const emitLog = (message: string) => {
@@ -52,20 +51,17 @@ export const processUserRequest = async (
   try {
     // Step 1: Use Router to determine if PRD related
     emitLog("🧭 Step 1: Routing message...");
-    stepStartTime = performance.now();
     const { is_prd_section_related } = await routeRequest(messages);
     emitLog(`📝 Is PRD related: ${is_prd_section_related}`);
 
     // Generate document context *before* branching, now reading from Redux store via the updated function
     emitLog("📄 Generating document context...");
-    stepStartTime = performance.now();
     const documentContext = getOptimalDocumentContext();
     emitLog("📄 Document context generated");
 
     if (is_prd_section_related) {
       // Step 2: Use Section Agent to identify sections to update -> Currently set all sections updated later!
       emitLog("🔍 Step 2: Identifying sections to update...");
-      stepStartTime = performance.now();
       const { sectionsToUpdate } = await getSectionsToUpdate(messages);
       const sectionsToUpdateList = Object.keys(sectionsToUpdate).filter(
         (key) => sectionsToUpdate[key].shouldUpdate
@@ -74,25 +70,21 @@ export const processUserRequest = async (
 
       // Step 3: Update identified sections with streaming support
       emitLog("✏️ Step 3: Updating sections...");
-      stepStartTime = performance.now();
       const sectionUpdatesPromises = Object.entries(sectionsToUpdate)
-        .filter(([_, info]) => info.shouldUpdate)
+        .filter(([, info]) => info.shouldUpdate)
         .map(async ([sectionId, info]) => {
           emitLog(`Starting update for section: ${sectionId}`);
 
-          // Enhanced relevantInfo with additional context
-          let enhancedRelevantInfo = info.relevantInfo;
-
           const newSummary = await getSummary(
             "system",
-            enhancedRelevantInfo,
+            info.relevantInfo,
             sectionHistories[sectionId].chatSummary
           );
           emitLog(`Summary for ${sectionId}`);
 
           const content = await getMarkdownResponseForSection(
             sectionId,
-            enhancedRelevantInfo,
+            info.relevantInfo,
             {
               ...sectionHistories[sectionId],
               chatSummary: newSummary,
@@ -106,7 +98,7 @@ export const processUserRequest = async (
           return {
             sectionId,
             content,
-            relevantInfo: enhancedRelevantInfo,
+            relevantInfo: info.relevantInfo,
             chatSummary: newSummary,
           };
         });
@@ -126,7 +118,6 @@ export const processUserRequest = async (
       if (!hasDiffs) {
         // Step 4: Update section histories
         emitLog("💾 Step 4: Updating section histories...");
-        stepStartTime = performance.now();
         sectionUpdates.forEach((update) => {
           sectionHistories[update.sectionId] = {
             lastContent: update.content,
@@ -153,7 +144,6 @@ export const processUserRequest = async (
 
       // Step 5: Generate Update Summary (using sectionUpdates)
       emitLog("📄 Step 5: Generating update summary...");
-      stepStartTime = performance.now();
       // Create more specific update summary with section status for the conversation agent
       const updateSummary =
         sectionUpdates.length > 0
@@ -199,7 +189,6 @@ export const processUserRequest = async (
 
       // Step 6: Get response from Conversation Agent with streaming if available
       emitLog("🗣️ Step 6: Getting conversation response...");
-      stepStartTime = performance.now();
 
       const conversationStreamOptions = streamingOptions?.conversationCallbacks
         ? {
@@ -223,8 +212,6 @@ export const processUserRequest = async (
         typeof messages[messages.length - 1].content === "string"
           ? messages[messages.length - 1].content
           : JSON.stringify(messages[messages.length - 1].content);
-
-      let transitionSection: string | null = null;
 
       // Check for transition requests
       const transitionRequest = detectSectionTransition(lastMessageContent);
@@ -257,12 +244,6 @@ export const processUserRequest = async (
           // Select the least complete section
           const nextSectionId = sectionCompleteness[0].sectionId;
           emitLog(`Selected next section: ${nextSectionId}`);
-
-          // Force an update flag for this section
-          transitionSection = nextSectionId;
-        } else {
-          // Direct transition to a specific section
-          transitionSection = transitionRequest;
         }
       }
 
@@ -273,7 +254,6 @@ export const processUserRequest = async (
     } else {
       // If not PRD related, just get a regular conversation response with streaming if available
       emitLog("💬 Not PRD related, getting simple conversation response...");
-      stepStartTime = performance.now();
 
       const conversationStreamOptions = streamingOptions?.conversationCallbacks
         ? {

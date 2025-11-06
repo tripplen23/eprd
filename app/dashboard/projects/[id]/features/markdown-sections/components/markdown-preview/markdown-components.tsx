@@ -1,9 +1,19 @@
 import { MermaidDiagram } from "./mermaid-diagram";
 import { cn } from "@/lib/utils";
 
+interface MarkdownComponentProps {
+  children?: React.ReactNode;
+  className?: string;
+  inline?: boolean;
+  href?: string;
+  ordered?: boolean;
+  node?: unknown;
+  [key: string]: unknown;
+}
+
 export function MarkdownComponents() {
   return {
-    h1({ node, children, ...props }: any) {
+    h1({ children, ...props }: MarkdownComponentProps) {
       const domProps = { ...props };
       delete domProps.node;
 
@@ -16,7 +26,7 @@ export function MarkdownComponents() {
         </h1>
       );
     },
-    h2({ node, children, ...props }: any) {
+    h2({ children, ...props }: MarkdownComponentProps) {
       const domProps = { ...props };
       delete domProps.node;
 
@@ -29,7 +39,7 @@ export function MarkdownComponents() {
         </h2>
       );
     },
-    h3({ node, children, ...props }: any) {
+    h3({ children, ...props }: MarkdownComponentProps) {
       const domProps = { ...props };
       delete domProps.node;
 
@@ -42,8 +52,8 @@ export function MarkdownComponents() {
         </h3>
       );
     },
-    ul({ node, ordered, children, ...props }: any) {
-      const domProps: any = { ...props };
+    ul({ children, ...props }: MarkdownComponentProps) {
+      const domProps = { ...props };
       delete domProps.ordered;
       delete domProps.node;
 
@@ -53,8 +63,8 @@ export function MarkdownComponents() {
         </ul>
       );
     },
-    ol({ node, ordered, children, ...props }: any) {
-      const domProps: any = { ...props };
+    ol({ children, ...props }: MarkdownComponentProps) {
+      const domProps = { ...props };
       delete domProps.ordered;
       delete domProps.node;
 
@@ -64,7 +74,7 @@ export function MarkdownComponents() {
         </ol>
       );
     },
-    li({ node, children, ...props }: any) {
+    li({ children, ...props }: MarkdownComponentProps) {
       const domProps = { ...props };
       delete domProps.ordered;
       delete domProps.checked;
@@ -78,7 +88,7 @@ export function MarkdownComponents() {
         </li>
       );
     },
-    p({ node, children, ...props }: any) {
+    p({ children, ...props }: MarkdownComponentProps) {
       const text = Array.isArray(children)
         ? children
             .map((child) => {
@@ -144,7 +154,7 @@ export function MarkdownComponents() {
         </p>
       );
     },
-    code({ node, inline, className, children, ...props }: any) {
+    code({ inline, className, children, ...props }: MarkdownComponentProps) {
       const match = /language-(\w+)/.exec(className || "");
       const language = match?.[1];
 
@@ -174,7 +184,7 @@ export function MarkdownComponents() {
         </div>
       );
     },
-    blockquote({ node, children, ...props }: any) {
+    blockquote({ children, ...props }: MarkdownComponentProps) {
       return (
         <blockquote
           className="border-l-4 border-primary/30 pl-4 italic my-4 text-muted-foreground"
@@ -184,7 +194,7 @@ export function MarkdownComponents() {
         </blockquote>
       );
     },
-    a({ node, children, href, ...props }: any) {
+    a({ children, href, ...props }: MarkdownComponentProps) {
       return (
         <a
           href={href}
@@ -197,7 +207,7 @@ export function MarkdownComponents() {
         </a>
       );
     },
-    table({ node, children, ...props }: any) {
+    table({ children, ...props }: MarkdownComponentProps) {
       return (
         <div className="my-4 overflow-x-auto">
           <table className="w-full border-collapse" {...props}>
@@ -206,7 +216,7 @@ export function MarkdownComponents() {
         </div>
       );
     },
-    thead({ node, children, ...props }: any) {
+    thead({ children, ...props }: MarkdownComponentProps) {
       const domProps = { ...props };
       delete domProps.node;
 
@@ -216,7 +226,7 @@ export function MarkdownComponents() {
         </thead>
       );
     },
-    tbody({ node, children, ...props }: any) {
+    tbody({ children, ...props }: MarkdownComponentProps) {
       const domProps = { ...props };
       delete domProps.node;
 
@@ -226,7 +236,7 @@ export function MarkdownComponents() {
         </tbody>
       );
     },
-    tr({ node, children, ...props }: any) {
+    tr({ children, ...props }: MarkdownComponentProps) {
       const domProps = { ...props };
       delete domProps.node;
 
@@ -236,7 +246,7 @@ export function MarkdownComponents() {
         </tr>
       );
     },
-    th({ node, children, ...props }: any) {
+    th({ children, ...props }: MarkdownComponentProps) {
       const domProps = { ...props };
       delete domProps.isHeader;
       delete domProps.node;
@@ -250,7 +260,7 @@ export function MarkdownComponents() {
         </th>
       );
     },
-    td({ node, children, ...props }: any) {
+    td({ children, ...props }: MarkdownComponentProps) {
       const domProps = { ...props };
       delete domProps.node;
 

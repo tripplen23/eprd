@@ -47,7 +47,7 @@ export const openaiApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    completion: builder.mutation<OpenAIResponse<any>, OpenAIRequest>({
+    completion: builder.mutation<OpenAIResponse<unknown>, OpenAIRequest>({
       query: ({ systemPrompt, messages, options = {} }) => ({
         url: "",
         method: "POST",
@@ -67,7 +67,7 @@ export const openaiApi = createApi({
           prediction: options.prediction,
         },
       }),
-      transformResponse: (response: any, meta, arg): OpenAIResponse<any> => {
+      transformResponse: (response: { choices: Array<{ message: { content: string } }>; usage?: { completion_tokens_details?: { accepted_prediction_tokens: number; rejected_prediction_tokens: number } } }, _meta, arg): OpenAIResponse<unknown> => {
         const responseContent = response.choices[0].message.content;
 
         if (arg.options?.parseResponse === false) {
@@ -87,7 +87,7 @@ export const openaiApi = createApi({
             rawContent: responseContent,
             usage: response.usage,
           };
-        } catch (error) {
+        } catch {
           return {
             success: false,
             error: "Failed to parse AI response as JSON",
@@ -252,8 +252,8 @@ export const openaiApi = createApi({
               },
             },
           };
-        } catch (error: any) {
-          if (error.name === "AbortError") {
+        } catch (error: unknown) {
+          if (error instanceof Error && error.name === "AbortError") {
             return {
               error: {
                 status: "CUSTOM_ERROR",
@@ -262,7 +262,7 @@ export const openaiApi = createApi({
             };
           }
 
-          const errorMessage = error.message || "Unknown error occurred";
+          const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
           callbacks.onError?.(errorMessage);
 
           return {

@@ -5,7 +5,7 @@ export const prototypeUpdateCriteria: SectionUpdateCriteria = {
   relevantInfoGuide: "Pass the complete message content without modification or filtering"
 };
 
-export const prototypePrompt = (history: { lastContent: string, lastRelevantInfo: string, chatSummary: string }, relevantInfo: string) => `
+export const prototypePrompt = (history: { lastContent: string, lastRelevantInfo: string, chatSummary: string }) => `
 Generate content for the Prototype section. Follow these rules strictly:
 1. Start with exactly this heading: # Prototype
 2. There should be no other headings in the response. Not even lower level headings.

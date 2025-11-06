@@ -76,9 +76,9 @@ export async function callOpenAI<T>(
     // Use type assertion to handle the error property safely
     if ("error" in result) {
       const errorMessage =
-        typeof (result as any).error === "string"
-          ? (result as any).error
-          : JSON.stringify((result as any).error);
+        typeof (result as { error: unknown }).error === "string"
+          ? (result as { error: string }).error
+          : JSON.stringify((result as { error: unknown }).error);
       throw new Error(errorMessage);
     }
 
@@ -90,7 +90,7 @@ export async function callOpenAI<T>(
       });
     }
     return result.data as OpenAIResponse<T>;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(`${options.logLabel ?? "OpenAI API Call"} Error:`, error);
     const errorMessage = error instanceof Error ? error.message : String(error);
     return {
@@ -155,9 +155,9 @@ export async function streamOpenAI(
 
     if ("error" in result) {
       const errorMessage =
-        typeof (result as any).error === "string"
-          ? (result as any).error
-          : JSON.stringify((result as any).error);
+        typeof (result as { error: unknown }).error === "string"
+          ? (result as { error: string }).error
+          : JSON.stringify((result as { error: unknown }).error);
       throw new Error(errorMessage);
     }
 
@@ -169,7 +169,7 @@ export async function streamOpenAI(
       });
     }
     return result.data as OpenAIResponse<string>;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(
       `${options.logLabel ?? "OpenAI Streaming Call"} Error:`,
       error

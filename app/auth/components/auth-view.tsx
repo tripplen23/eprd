@@ -7,6 +7,7 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import LoadingDots from '@/components/ui/loading-dots';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 // Define provider types for type safety
 type AuthProvider = 'microsoft-entra-id' | 'google' | 'linkedin';
@@ -65,7 +66,7 @@ export function AuthView({ className, ...props }: React.ComponentPropsWithoutRef
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-yellow-300/30 via-transparent to-yellow-300/30 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-full transition-all duration-1000"></div>
                             <span className="flex items-center justify-center gap-3 relative z-10">
-                                <img src="/providers/Microsoft_Logo.svg" alt="Microsoft Logo" className="h-5 w-5" />
+                                <Image src="/providers/Microsoft_Logo.svg" alt="Microsoft Logo" width={20} height={20} />
                                 {loadingProvider === 'microsoft-entra-id' ? <LoadingDots /> : 'Continue with Microsoft'}
                             </span>
                         </Button>
@@ -77,7 +78,7 @@ export function AuthView({ className, ...props }: React.ComponentPropsWithoutRef
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-red-500/30 via-transparent to-red-500/30 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-full transition-all duration-1000"></div>
                             <span className="flex items-center justify-center gap-3 relative z-10">
-                                <img src="/providers/Google_Logo.svg" alt="Google Logo" className="h-5 w-5" />
+                                <Image src="/providers/Google_Logo.svg" alt="Google Logo" width={20} height={20} />
                                 {loadingProvider === 'google' ? <LoadingDots /> : 'Continue with Google'}
                             </span>
                         </Button>
@@ -89,7 +90,7 @@ export function AuthView({ className, ...props }: React.ComponentPropsWithoutRef
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-transparent to-blue-400/30 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-full transition-all duration-1000"></div>
                             <span className="flex items-center justify-center gap-3 relative z-10">
-                                <img src="/providers/LinkedIn_Logo.svg" alt="LinkedIn Logo" className="h-5 w-5" />
+                                <Image src="/providers/LinkedIn_Logo.svg" alt="LinkedIn Logo" width={20} height={20} />
                                 {loadingProvider === 'linkedin' ? <LoadingDots /> : 'Continue with LinkedIn'}
                             </span>
                         </Button>

@@ -56,7 +56,7 @@ export function useAutoScroll(options: UseAutoScrollOptions = {}) {
       });
       userHasScrolled.current = false;
     },
-    [smooth, initialScroll]
+    [smooth]
   );
 
   const handleScroll = useCallback(() => {

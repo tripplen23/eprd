@@ -9,7 +9,7 @@ type LLMPayload = {
     role: 'user' | 'system';
 }
 
-type StateStore = {}
+type StateStore = Record<string, unknown>
 
 type LLMFunc = (payload: LLMPayload) => Response;
 export class BaseAgent {
@@ -27,8 +27,8 @@ export class BaseAgent {
         this.stateStore = stateStore;
     }
 
-    async getResponse(payload: LLMPayload) {
-
+    async getResponse() {
+        // Implementation pending
     }
 
 }

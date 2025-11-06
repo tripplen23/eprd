@@ -27,7 +27,7 @@ export type DocumentSectionInfo = {
 
 export type Message = {
   role: "system" | "user" | "assistant";
-  content: string | Array<{ type: string; [key: string]: any }>;
+  content: string | Array<{ type: string; [key: string]: unknown }>;
   timestamp?: Date;
 };
 

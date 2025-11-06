@@ -114,12 +114,12 @@ You are an expert conversation summarizer. Your task is to update an existing co
 
 export const getUpdatedConversationSummary = async (
   previousSummary: string | undefined,
-  userRequest: string | Array<{ type: string; [key: string]: any }>,
-  assistantResponse: string | Array<{ type: string; [key: string]: any }>
+  userRequest: string | Array<{ type: string; [key: string]: unknown }>,
+  assistantResponse: string | Array<{ type: string; [key: string]: unknown }>
 ): Promise<string> => {
   // Extract text content from structured messages
   const extractTextContent = (
-    content: string | Array<{ type: string; [key: string]: any }>
+    content: string | Array<{ type: string; [key: string]: unknown }>
   ) => {
     if (typeof content === "string") return content;
 

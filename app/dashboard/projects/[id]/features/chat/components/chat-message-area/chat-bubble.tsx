@@ -85,7 +85,7 @@ interface ChatBubbleMessageProps
 }
 
 const ChatBubbleMessage = React.forwardRef<HTMLDivElement, ChatBubbleMessageProps>(
-    ({ className, variant, layout, isLoading = false, renderMarkdown = true, children, ...props }, ref) => {
+    ({ className, isLoading = false, renderMarkdown = true, children, ...props }, ref) => {
         // Check if the content is a string and contains markdown
         const hasMarkdownContent =
             typeof children === 'string' &&

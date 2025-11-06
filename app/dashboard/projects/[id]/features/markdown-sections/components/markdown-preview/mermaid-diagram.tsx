@@ -58,7 +58,7 @@ export function MermaidDiagram({ content }: MermaidDiagramProps) {
         if (isMounted.current) {
           setSvgContent(svg);
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         if (isMounted.current) {
           console.error("Mermaid error:", err);
         }

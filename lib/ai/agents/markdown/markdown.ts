@@ -24,7 +24,7 @@ export const getMarkdownResponseForSection = async (section: string, relevantInf
 
     try {
         // Map of section IDs to their prompt functions
-        const sectionPrompts: Record<string, Function> = {
+        const sectionPrompts: Record<string, (history: { lastContent: string; lastRelevantInfo: string; chatSummary: string }, relevantInfo: string) => string> = {
             'project-overview': projectOverviewPrompt,
             'problem-statement': problemStatementPrompt,
             scope: scopePrompt,
@@ -32,7 +32,7 @@ export const getMarkdownResponseForSection = async (section: string, relevantInf
             'use-cases': useCasesPrompt,
             'business-process': businessProcessPrompt,
             'data-model': dataModelPrompt,
-            prototype: prototypePrompt,
+            prototype: (history: { lastContent: string; lastRelevantInfo: string; chatSummary: string }) => prototypePrompt(history),
         };
 
         // Get the appropriate prompt function for this section
@@ -45,8 +45,15 @@ export const getMarkdownResponseForSection = async (section: string, relevantInf
         // Enhance relevant info with section-specific instructions
         const enhancedRelevantInfo = enhanceRelevantInfo(section, relevantInfo, storeHistory);
 
+        // Prepare history with default values for optional properties
+        const historyForPrompt = {
+            lastContent: storeHistory?.lastContent || '',
+            lastRelevantInfo: storeHistory.lastRelevantInfo,
+            chatSummary: storeHistory.chatSummary,
+        };
+
         // Generate the prompt section by section
-        const prompt = promptFunction(storeHistory, enhancedRelevantInfo);
+        const prompt = promptFunction(historyForPrompt, enhancedRelevantInfo);
 
         // Use previous content as prediction if it exists and is substantial
         const prediction =

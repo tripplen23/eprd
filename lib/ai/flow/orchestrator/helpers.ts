@@ -2,7 +2,7 @@ import { PRD_SECTION_TITLES } from "@/lib/ai/const";
 
 // Helper to detect transition requests in messages
 export const detectSectionTransition = (
-  message: string | Array<{ type: string; [key: string]: any }>
+  message: string | Array<{ type: string; [key: string]: unknown }>
 ): string | null => {
   // If message is not a string, convert it to a string representation
   const messageText =

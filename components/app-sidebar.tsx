@@ -11,6 +11,7 @@ import { useMobile } from '@/hooks/use-mobile';
 import { useState, memo } from 'react';
 import { Pin, PinOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
     className?: string;
@@ -60,10 +61,11 @@ function AppSidebarComponent({ className }: SidebarProps) {
                             onClick={handleLogoClick}
                         >
                             <div className="flex items-center gap-2">
-                                <img
+                                <Image
                                     src="https://avatars.githubusercontent.com/u/198960902?s=48&v=4"
                                     alt="Company Logo"
-                                    className="h-6 w-6"
+                                    width={24}
+                                    height={24}
                                 />
                                 <div className="flex flex-col text-left leading-tight">
                                     <span className="text-base font-semibold">PRD Chat</span>

@@ -1,5 +1,4 @@
 import { callOpenAI } from "@/lib/config/openai-client";
-import { Message } from "@/lib/ai/types";
 
 export const summarySystemPrompt = `
 You are a conversation summarizer. Summarize the conversation while following these rules:
